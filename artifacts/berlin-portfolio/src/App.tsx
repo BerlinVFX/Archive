@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/contexts/ThemeContext";
 import Cursor from "@/components/Cursor";
 import LoadingScreen from "@/components/LoadingScreen";
 import CookieConsent from "@/components/CookieConsent";
+import ScrollProgress from "@/components/ScrollProgress";
 import Navbar from "@/components/Navbar";
 import Hero from "@/sections/Hero";
 import Work from "@/sections/Work";
@@ -29,29 +30,25 @@ function Portfolio() {
   }, [loading, accepted]);
 
   return (
-    <main className="relative bg-background min-h-screen text-foreground selection:bg-primary selection:text-primary-foreground">
-      <div className="bg-noise" />
+    <main className="relative bg-background min-h-screen text-foreground">
       <Cursor />
 
       <AnimatePresence>
-        {loading && (
-          <LoadingScreen onComplete={() => setLoading(false)} />
-        )}
+        {loading && <LoadingScreen onComplete={() => setLoading(false)} />}
       </AnimatePresence>
 
       <AnimatePresence>
-        {!loading && !accepted && (
-          <CookieConsent onAccept={() => setAccepted(true)} />
-        )}
+        {!loading && !accepted && <CookieConsent onAccept={() => setAccepted(true)} />}
       </AnimatePresence>
 
       {!loading && accepted && (
         <>
+          <ScrollProgress />
           <Navbar />
           <div className="flex flex-col">
             <Hero />
-            <Work />
             <About />
+            <Work />
             <Services />
             <Contact />
             <Footer />

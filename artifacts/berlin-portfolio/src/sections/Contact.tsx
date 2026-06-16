@@ -1,25 +1,35 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Send, Download, X, CheckCircle } from "lucide-react";
+import { Send, Download, X, CheckCircle, Mail } from "lucide-react";
+import { SiInstagram, SiDiscord } from "react-icons/si";
 import { useCursor } from "@/contexts/CursorContext";
 
 const SOCIAL_LINKS = [
   {
+    Icon: SiInstagram,
     platform: "Instagram",
     handle: "@berlin_vfx",
     href: "https://www.instagram.com/berlin_vfx?igsh=Nzl4d3NndG1zZjU1&utm_source=qr",
+    color: "group-hover:bg-gradient-to-br group-hover:from-purple-500 group-hover:via-pink-500 group-hover:to-orange-400",
   },
   {
+    Icon: SiDiscord,
     platform: "Discord",
     handle: "ber.n",
     href: "https://discord.com/users/ber.n",
+    color: "group-hover:bg-[#5865F2]",
   },
   {
+    Icon: Mail,
     platform: "Email",
     handle: "berlindesignstn@gmail.com",
     href: "mailto:berlindesignstn@gmail.com",
+    color: "group-hover:bg-primary",
   },
 ];
+
+const INPUT_CLASS =
+  "w-full bg-background border border-border px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:border-primary transition-colors";
 
 export default function Contact() {
   const { setCursorType } = useCursor();
@@ -70,6 +80,7 @@ export default function Contact() {
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16">
+          {/* Form */}
           <motion.div
             className="lg:col-span-2"
             initial={{ opacity: 0, y: 20 }}
@@ -88,9 +99,7 @@ export default function Contact() {
                   <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center mb-5">
                     <CheckCircle className="w-5 h-5 text-primary" />
                   </div>
-                  <h3 className="font-serif text-2xl font-bold mb-2">
-                    Message sent.
-                  </h3>
+                  <h3 className="font-serif text-2xl font-bold mb-2">Message sent.</h3>
                   <p className="text-muted-foreground text-sm leading-relaxed mb-6">
                     I'll get back to you within 48 hours.
                   </p>
@@ -120,7 +129,7 @@ export default function Contact() {
                         data-testid="input-name"
                         value={form.name}
                         onChange={(e) => setForm({ ...form, name: e.target.value })}
-                        className="w-full bg-background border border-border px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:border-primary transition-colors"
+                        className={INPUT_CLASS}
                         placeholder="Your name"
                         onFocus={() => setCursorType("click")}
                         onBlur={() => setCursorType("default")}
@@ -136,7 +145,7 @@ export default function Contact() {
                         data-testid="input-email"
                         value={form.email}
                         onChange={(e) => setForm({ ...form, email: e.target.value })}
-                        className="w-full bg-background border border-border px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:border-primary transition-colors"
+                        className={INPUT_CLASS}
                         placeholder="your@email.com"
                         onFocus={() => setCursorType("click")}
                         onBlur={() => setCursorType("default")}
@@ -153,7 +162,7 @@ export default function Contact() {
                       data-testid="input-message"
                       value={form.message}
                       onChange={(e) => setForm({ ...form, message: e.target.value })}
-                      className="w-full bg-background border border-border px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:border-primary transition-colors resize-none"
+                      className={`${INPUT_CLASS} resize-none`}
                       placeholder="Tell me about your project..."
                       onFocus={() => setCursorType("click")}
                       onBlur={() => setCursorType("default")}
@@ -184,6 +193,7 @@ export default function Contact() {
             </AnimatePresence>
           </motion.div>
 
+          {/* Sidebar */}
           <motion.div
             className="space-y-8"
             initial={{ opacity: 0, y: 20 }}
@@ -191,12 +201,13 @@ export default function Contact() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
+            {/* Social links */}
             <div>
               <p className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground mb-2">
                 Find me on
               </p>
               <div className="flex flex-col">
-                {SOCIAL_LINKS.map(({ platform, handle, href }, i) => (
+                {SOCIAL_LINKS.map(({ Icon, platform, handle, href }, i) => (
                   <motion.a
                     key={platform}
                     href={href}
@@ -211,9 +222,7 @@ export default function Contact() {
                     onMouseLeave={() => setCursorType("default")}
                   >
                     <span className="absolute bottom-0 left-0 h-[2px] w-0 group-hover:w-full bg-primary transition-all duration-500 ease-out" />
-                    <span className="font-mono text-xs text-muted-foreground group-hover:text-primary transition-colors duration-300 flex-shrink-0">
-                      {platform}
-                    </span>
+                    <Icon className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors duration-300 flex-shrink-0" />
                     <div className="flex items-center gap-3 ml-3 flex-1 justify-between">
                       <span className="font-serif font-semibold text-foreground group-hover:text-primary transition-colors duration-300 break-all text-[12px]">
                         {handle}
@@ -237,6 +246,7 @@ export default function Contact() {
               </div>
             </div>
 
+            {/* CV download */}
             <div>
               <p className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground mb-4">
                 Resume
@@ -255,9 +265,7 @@ export default function Contact() {
                   <p className="font-mono text-[9px] uppercase tracking-widest text-muted-foreground">
                     PDF · 2026
                   </p>
-                  <p className="font-mono text-sm text-foreground mt-0.5">
-                    Download CV
-                  </p>
+                  <p className="font-mono text-sm text-foreground mt-0.5">Download CV</p>
                 </div>
                 <Download className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors flex-shrink-0" />
               </button>
@@ -266,6 +274,7 @@ export default function Contact() {
         </div>
       </div>
 
+      {/* CV preview modal */}
       <AnimatePresence>
         {cvPreview && (
           <motion.div
@@ -297,32 +306,11 @@ export default function Contact() {
                 <p className="font-mono text-[9px] uppercase tracking-widest text-muted-foreground mb-4">
                   Preview
                 </p>
-                <div className="bg-background border border-border p-5 space-y-3">
-                  <div>
-                    <p className="font-serif text-xl font-bold">BERLIN</p>
-                    <p className="font-mono text-[9px] text-muted-foreground uppercase tracking-widest">
-                      Creative Developer
-                    </p>
-                  </div>
-                  <div className="h-px bg-border" />
-                  <div className="space-y-2">
-                    {[
-                      "React / TypeScript",
-                      "Framer Motion / GSAP",
-                      "Three.js / WebGL",
-                      "Node.js / Express",
-                    ].map((skill) => (
-                      <div key={skill} className="flex items-center gap-2 font-mono text-xs text-muted-foreground">
-                        <span className="text-primary">›</span>
-                        {skill}
-                      </div>
-                    ))}
-                  </div>
-                  <div className="h-px bg-border" />
-                  <p className="font-mono text-[9px] text-muted-foreground">
-                    hello@berlin.dev · 2024
-                  </p>
-                </div>
+                <img
+                  src="/berlin-cv.png"
+                  alt="BERLIN CV"
+                  className="w-full border border-border"
+                />
               </div>
               <div className="p-4">
                 <button

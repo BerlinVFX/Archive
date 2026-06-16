@@ -5,136 +5,156 @@ import { useCursor } from "@/contexts/CursorContext";
 export default function Hero() {
   const { setCursorType } = useCursor();
 
-  const scrollToWork = () => {
-    document.getElementById("work")?.scrollIntoView({ behavior: "smooth" });
-  };
-  const scrollToAbout = () => {
-    document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
     <section
-      id="hero"
-      className="relative min-h-screen flex flex-col justify-between px-6 md:px-16 lg:px-24 pt-32 pb-12"
+      id="home"
+      className="relative min-h-screen flex items-center justify-center pt-20 pb-10 overflow-hidden"
     >
-      <div className="flex-1 flex flex-col justify-center">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-          <motion.p
-            className="font-mono text-xs uppercase tracking-[0.25em] text-muted-foreground mb-8"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-          >
-            <span className="text-primary">●</span>&nbsp;&nbsp;Available for new projects
-          </motion.p>
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-[120px] pointer-events-none" />
 
-          <div className="overflow-hidden mb-2">
-            <motion.h1
-              className="font-serif text-[clamp(3rem,12vw,9rem)] font-bold leading-[0.9] tracking-tight"
-              initial={{ y: "100%" }}
-              animate={{ y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            >
-              I build
-            </motion.h1>
-          </div>
-          <div className="overflow-hidden mb-2">
-            <motion.h1
-              className="font-serif text-[clamp(3rem,12vw,9rem)] font-bold leading-[0.9] tracking-tight"
-              initial={{ y: "100%" }}
-              animate={{ y: 0 }}
-              transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            >
-              websites that
-            </motion.h1>
-          </div>
-          <div className="overflow-hidden mb-10">
-            <motion.h1
-              className="font-serif text-[clamp(3rem,12vw,9rem)] font-bold leading-[0.9] tracking-tight italic"
-              initial={{ y: "100%" }}
-              animate={{ y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            >
-              people{" "}
-              <span className="not-italic text-muted-foreground/50">remember.</span>
-            </motion.h1>
-          </div>
-
-          <div className="flex flex-col md:flex-row md:items-end gap-8 md:gap-16">
-            <motion.p
-              className="font-mono text-xs text-muted-foreground leading-relaxed max-w-sm"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.8 }}
-            >
-              I engineer digital experiences that bridge the gap between rigorous
-              technical architecture and editorial magazine design.
-            </motion.p>
-
-            <motion.div
-              className="flex items-center gap-4"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.9 }}
-            >
-              <button
-                id="button-view-work"
-                onClick={scrollToWork}
-                onMouseEnter={() => setCursorType("click")}
-                onMouseLeave={() => setCursorType("default")}
-                className="px-7 py-3.5 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-primary transition-colors"
-              >
-                View Archive
-              </button>
-              <button
-                id="button-about"
-                onClick={scrollToAbout}
-                onMouseEnter={() => setCursorType("click")}
-                onMouseLeave={() => setCursorType("default")}
-                className="px-7 py-3.5 border border-border font-mono text-xs uppercase tracking-widest text-muted-foreground hover:border-foreground hover:text-foreground transition-colors"
-              >
-                Read Profile
-              </button>
-            </motion.div>
-          </div>
-        </motion.div>
-      </div>
-
+      {/* Code snippet card — top right */}
       <motion.div
-        className="flex items-center gap-3 mt-16"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.6, delay: 1.1 }}
+        className="absolute top-28 right-[8%] w-72 h-48 border border-border bg-card/60 backdrop-blur-md rounded-lg shadow-2xl hidden lg:flex flex-col overflow-hidden"
+        initial={{ y: 60, opacity: 0, rotate: 0 }}
+        animate={{ y: 0, opacity: 1, rotate: 5 }}
+        transition={{ delay: 0.5, duration: 1.2, type: "spring", damping: 20 }}
+        style={{ zIndex: 0 }}
       >
-        <ArrowDown className="w-3.5 h-3.5 text-muted-foreground animate-bounce" />
-        <span className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-          Scroll
-        </span>
+        <div className="h-8 border-b border-border flex items-center px-3 gap-2 bg-muted/50 flex-shrink-0">
+          <div className="w-3 h-3 rounded-full bg-destructive/70" />
+          <div className="w-3 h-3 rounded-full bg-primary/70" />
+          <div className="w-3 h-3 rounded-full bg-green-500/70" />
+          <div className="ml-2 flex-1 h-4 rounded bg-border/50" />
+        </div>
+        <div className="flex-1 p-4 font-mono text-[10px] text-muted-foreground leading-relaxed overflow-hidden">
+          <span className="text-primary">function</span>{" "}
+          <span className="text-secondary">initPortfolio</span>
+          {"() {\n"}
+          {"  "}
+          <span className="text-primary">const</span>
+          {" vibes = [\n"}
+          {"    "}
+          {"'editorial', 'terminal',\n"}
+          {"    "}
+          {"'bauhaus'\n"}
+          {"  "}
+          {"];\n"}
+          {"  "}
+          <span className="text-primary">return</span>
+          {" fuse(vibes);\n"}
+          {"}"}
+        </div>
       </motion.div>
 
-      <div className="absolute bottom-12 right-6 md:right-16 lg:right-24 hidden lg:flex flex-col items-end gap-6">
-        {[
-          { value: "6+", label: "Projects" },
-          { value: "4", label: "Years" },
-          { value: "∞", label: "Coffee" },
-        ].map(({ value, label }, i) => (
-          <motion.div
-            key={label}
-            className="text-right"
-            initial={{ opacity: 0, x: 10 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.9 + i * 0.1 }}
+      {/* Design mockup card — bottom left */}
+      <motion.div
+        className="absolute bottom-36 left-[8%] w-44 h-56 shadow-2xl hidden lg:block bg-card border border-border backdrop-blur-md p-4"
+        style={{ zIndex: 0 }}
+        initial={{ y: -40, opacity: 0, rotate: 0 }}
+        animate={{ y: 0, opacity: 1, rotate: -10 }}
+        transition={{ delay: 0.8, duration: 1.2, type: "spring", damping: 20 }}
+      >
+        <div className="space-y-2">
+          <div className="w-16 h-1.5 bg-primary/60 rounded-full" />
+          <div className="w-10 h-1 bg-muted-foreground/30 rounded-full" />
+        </div>
+        <div className="w-full h-24 bg-muted/50 border border-border flex items-center justify-center relative overflow-hidden mt-4">
+          <div className="w-8 h-8 rounded-full border-2 border-primary/60 flex items-center justify-center">
+            <div className="w-2 h-2 rounded-full bg-primary" />
+          </div>
+          <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
+        </div>
+        <div className="space-y-1.5 mt-3">
+          <div className="w-full h-1 bg-muted-foreground/20 rounded-full" />
+          <div className="w-3/4 h-1 bg-muted-foreground/15 rounded-full" />
+          <div className="w-1/2 h-1 bg-muted-foreground/10 rounded-full" />
+        </div>
+      </motion.div>
+
+      {/* Main hero content */}
+      <div className="container relative z-10 mx-auto px-6 flex flex-col items-center text-center">
+        {/* Available badge */}
+        <motion.div
+          className="inline-flex items-center gap-2 px-4 py-1.5 mb-8 rounded-full border border-border bg-card/60 backdrop-blur-sm"
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.7 }}
+        >
+          <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+          <span className="text-xs font-mono uppercase tracking-widest text-muted-foreground">
+            Available for new projects
+          </span>
+        </motion.div>
+
+        {/* BERLIN. heading */}
+        <motion.h1
+          className="text-7xl md:text-[9rem] lg:text-[11rem] font-serif font-bold tracking-tighter leading-none mb-6 text-foreground"
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.15 }}
+        >
+          BERLIN
+          <span className="text-primary">.</span>
+        </motion.h1>
+
+        {/* Subtitle */}
+        <motion.p
+          className="text-xl md:text-2xl text-muted-foreground max-w-2xl font-light leading-relaxed mb-12"
+          initial={{ y: 30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.7, delay: 0.3 }}
+        >
+          I engineer digital experiences that bridge the gap between rigorous
+          technical architecture and editorial magazine design.
+        </motion.p>
+
+        {/* CTA buttons */}
+        <motion.div
+          className="flex flex-col sm:flex-row gap-4 mb-10"
+          initial={{ y: 24, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.7, delay: 0.45 }}
+        >
+          <button
+            data-testid="button-view-work"
+            className="px-8 py-4 bg-foreground text-background font-mono text-sm uppercase tracking-widest hover:bg-primary transition-colors duration-300"
+            onMouseEnter={() => setCursorType("click")}
+            onMouseLeave={() => setCursorType("default")}
+            onClick={() =>
+              document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })
+            }
           >
-            <p className="font-serif text-2xl font-bold">{value}</p>
-            <p className="font-mono text-[9px] uppercase tracking-widest text-muted-foreground">
-              {label}
-            </p>
+            View Archive
+          </button>
+          <button
+            data-testid="button-about"
+            className="px-8 py-4 border border-border bg-card/50 backdrop-blur-sm text-foreground font-mono text-sm uppercase tracking-widest hover:bg-muted transition-colors duration-300"
+            onMouseEnter={() => setCursorType("click")}
+            onMouseLeave={() => setCursorType("default")}
+            onClick={() =>
+              document.getElementById("about")?.scrollIntoView({ behavior: "smooth" })
+            }
+          >
+            Read Profile
+          </button>
+        </motion.div>
+
+        {/* Scroll indicator */}
+        <motion.div
+          className="flex flex-col items-center gap-2 text-muted-foreground"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.4, duration: 0.8 }}
+        >
+          <span className="font-mono text-[10px] uppercase tracking-[0.3em]">Scroll</span>
+          <motion.div
+            animate={{ y: [0, 5, 0] }}
+            transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+          >
+            <ArrowDown className="w-4 h-4 opacity-50" />
           </motion.div>
-        ))}
+        </motion.div>
       </div>
     </section>
   );
