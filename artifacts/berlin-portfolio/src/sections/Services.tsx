@@ -2,30 +2,33 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Code, Briefcase, GraduationCap, CreditCard, Globe } from "lucide-react";
 import {
-  SiHtml5,
-  SiJavascript,
-  SiReact,
-  SiNodedotjs,
-  SiPaypal,
-  SiBinance,
-} from "react-icons/si";
+  FaHtml5,
+  FaCss3Alt,
+  FaJs,
+  FaReact,
+  FaNodeJs,
+  FaJava,
+} from "react-icons/fa";
+import { SiC, SiPaypal, SiBinance } from "react-icons/si";
 import { useCursor } from "@/contexts/CursorContext";
+
+type IconComp = React.ComponentType<{ style?: React.CSSProperties; className?: string }>;
 
 type SkillType = {
   name: string;
-  Icon: React.ComponentType<{ style?: React.CSSProperties; className?: string }> | null;
+  Icon: IconComp | null;
   color: string;
   pct: number;
 };
 
 const SKILLS: SkillType[] = [
-  { name: "HTML5", Icon: SiHtml5, color: "#E34F26", pct: 92 },
-  { name: "CSS3", Icon: null, color: "#1572B6", pct: 90 },
-  { name: "JavaScript", Icon: SiJavascript, color: "#F7DF1E", pct: 85 },
-  { name: "React", Icon: SiReact, color: "#61DAFB", pct: 78 },
-  { name: "Node.js", Icon: SiNodedotjs, color: "#339933", pct: 58 },
-  { name: "Java", Icon: null, color: "#f89820", pct: 35 },
-  { name: "C", Icon: null, color: "#A8B9CC", pct: 42 },
+  { name: "HTML5", Icon: FaHtml5, color: "#E34F26", pct: 92 },
+  { name: "CSS3", Icon: FaCss3Alt, color: "#1572B6", pct: 90 },
+  { name: "JavaScript", Icon: FaJs, color: "#F7DF1E", pct: 85 },
+  { name: "React", Icon: FaReact, color: "#61DAFB", pct: 78 },
+  { name: "Node.js", Icon: FaNodeJs, color: "#339933", pct: 58 },
+  { name: "Java", Icon: FaJava, color: "#f89820", pct: 35 },
+  { name: "C", Icon: SiC, color: "#A8B9CC", pct: 42 },
 ];
 
 const EXPERTISE = [
@@ -89,15 +92,29 @@ const TYPE_STYLES: Record<string, string> = {
   "Temp-time": "bg-sky-500/10 text-sky-500 border-sky-500/30",
 };
 
-const INTL_PAYMENTS = [
+type PaymentIntl = {
+  name: string;
+  Icon: IconComp | null;
+  color: string;
+  note: string | null;
+  bg: string;
+};
+
+type PaymentLocal = {
+  name: string;
+  color: string;
+  bg: string;
+};
+
+const INTL_PAYMENTS: PaymentIntl[] = [
   { name: "PayPal", Icon: SiPaypal, color: "#003087", note: null, bg: "#003087" },
   { name: "Wise", Icon: null, color: "#9FE870", note: null, bg: "#163300" },
-  { name: "Redotpay", Icon: null, color: "#FF3B3B", note: "USDT only", bg: "#1a0000" },
-  { name: "Binance", Icon: SiBinance, color: "#F0B90B", note: "USDT only", bg: "#181a20" },
-  { name: "Bybit", Icon: null, color: "#F7A600", note: "USDT only", bg: "#1a1200" },
+  { name: "Redotpay", Icon: null, color: "#FF3B3B", note: "USDT", bg: "#1a0000" },
+  { name: "Binance", Icon: SiBinance, color: "#F0B90B", note: "USDT", bg: "#181a20" },
+  { name: "Bybit", Icon: null, color: "#F7A600", note: "USDT", bg: "#1a1200" },
 ];
 
-const LOCAL_PAYMENTS = [
+const LOCAL_PAYMENTS: PaymentLocal[] = [
   { name: "Flouci", color: "#3B82F6", bg: "#0f1a2e" },
   { name: "D17", color: "#EF4444", bg: "#1a0808" },
   { name: "Virement Bancaire", color: "#10B981", bg: "#061a12" },
@@ -172,7 +189,7 @@ export default function Services() {
 
         {/* Skills + Experience grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-          {/* Left: Skills */}
+          {/* Left: Software Skills */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -345,40 +362,58 @@ export default function Services() {
                 {INTL_PAYMENTS.map((p, i) => (
                   <motion.div
                     key={p.name}
-                    className="group relative flex items-center justify-between px-5 py-4 border border-border bg-card overflow-hidden hover:border-opacity-60 transition-all duration-300 cursor-default"
+                    className="group relative flex items-center justify-between px-5 py-4 border border-border bg-card overflow-hidden transition-all duration-300 cursor-default"
+                    style={{ "--accent": p.color } as React.CSSProperties}
                     initial={{ opacity: 0, y: 12 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.35, delay: i * 0.06 }}
                     onMouseEnter={() => setCursorType("default")}
                   >
+                    {/* Left accent bar */}
                     <span
                       className="absolute left-0 top-0 bottom-0 w-[3px] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                       style={{ background: p.color }}
                     />
+                    {/* Hover background */}
                     <span
-                      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                       style={{
-                        background: `linear-gradient(to right, ${p.bg}80, transparent)`,
+                        background: `radial-gradient(ellipse at 10% 50%, ${p.color}12 0%, transparent 60%)`,
                       }}
                     />
-                    <div className="relative flex items-center gap-3">
+                    {/* Icon + name */}
+                    <div className="flex items-center gap-3 relative z-10">
                       {p.Icon ? (
-                        <p.Icon style={{ color: p.color }} className="w-5 h-5 flex-shrink-0" />
+                        <p.Icon
+                          style={{ color: p.color }}
+                          className="w-5 h-5 flex-shrink-0"
+                        />
                       ) : (
                         <span
-                          className="w-5 h-5 flex-shrink-0 font-mono text-[9px] font-bold flex items-center"
-                          style={{ color: p.color }}
+                          className="w-5 h-5 flex-shrink-0 flex items-center justify-center text-[9px] font-bold rounded-sm"
+                          style={{ background: p.color, color: "#000" }}
                         >
-                          {p.name.slice(0, 3).toUpperCase()}
+                          {p.name.slice(0, 2).toUpperCase()}
                         </span>
                       )}
-                      <span className="font-mono text-xs text-foreground">{p.name}</span>
+                      <span className="font-mono text-sm font-bold text-foreground group-hover:text-[var(--accent)] transition-colors duration-300">
+                        {p.name}
+                      </span>
                     </div>
-                    {p.note && (
-                      <span className="relative font-mono text-[9px] text-muted-foreground">
+                    {/* Note badge or dot */}
+                    {p.note ? (
+                      <span
+                        className="relative z-10 px-2.5 py-1 border text-[9px] font-mono uppercase tracking-widest"
+                        style={{ borderColor: `${p.color}50`, color: p.color }}
+                      >
                         {p.note}
                       </span>
+                    ) : (
+                      <span
+                        className="relative z-10 w-1.5 h-1.5 rounded-full"
+                        style={{ background: p.color }}
+                      />
                     )}
                   </motion.div>
                 ))}
@@ -388,9 +423,7 @@ export default function Services() {
             {/* Local */}
             <div>
               <div className="flex items-center gap-2 mb-5">
-                <span className="w-3.5 h-3.5 flex items-center justify-center font-mono text-[9px] text-muted-foreground">
-                  TN
-                </span>
+                <span className="font-mono text-[10px] font-bold text-muted-foreground">TN</span>
                 <p className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
                   Tunisia / Local
                 </p>
@@ -399,11 +432,12 @@ export default function Services() {
                 {LOCAL_PAYMENTS.map((p, i) => (
                   <motion.div
                     key={p.name}
-                    className="group relative flex items-center gap-3 px-5 py-4 border border-border bg-card overflow-hidden cursor-default"
+                    className="group relative flex items-center justify-between px-5 py-4 border border-border bg-card overflow-hidden transition-all duration-300 cursor-default"
+                    style={{ "--accent": p.color } as React.CSSProperties}
                     initial={{ opacity: 0, y: 12 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.35, delay: i * 0.06 }}
+                    transition={{ duration: 0.35, delay: i * 0.08 }}
                     onMouseEnter={() => setCursorType("default")}
                   >
                     <span
@@ -411,18 +445,26 @@ export default function Services() {
                       style={{ background: p.color }}
                     />
                     <span
-                      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                       style={{
-                        background: `linear-gradient(to right, ${p.bg}80, transparent)`,
+                        background: `radial-gradient(ellipse at 10% 50%, ${p.color}12 0%, transparent 60%)`,
                       }}
                     />
+                    <div className="flex items-center gap-3 relative z-10">
+                      <span
+                        className="w-5 h-5 flex-shrink-0 flex items-center justify-center text-[9px] font-bold rounded-sm"
+                        style={{ background: p.color, color: "#000" }}
+                      >
+                        {p.name.slice(0, 2).toUpperCase()}
+                      </span>
+                      <span className="font-mono text-sm font-bold text-foreground group-hover:text-[var(--accent)] transition-colors duration-300">
+                        {p.name}
+                      </span>
+                    </div>
                     <span
-                      className="relative w-2 h-2 rounded-full flex-shrink-0"
+                      className="relative z-10 w-1.5 h-1.5 rounded-full"
                       style={{ background: p.color }}
                     />
-                    <span className="relative font-mono text-xs text-foreground">
-                      {p.name}
-                    </span>
                   </motion.div>
                 ))}
               </div>
