@@ -95,6 +95,7 @@ const TYPE_STYLES: Record<string, string> = {
 type PaymentIntl = {
   name: string;
   Icon: IconComp | null;
+  logo?: string;
   color: string;
   note: string | null;
   bg: string;
@@ -102,21 +103,23 @@ type PaymentIntl = {
 
 type PaymentLocal = {
   name: string;
+  logo?: string;
+  logoBg?: string;
   color: string;
   bg: string;
 };
 
 const INTL_PAYMENTS: PaymentIntl[] = [
   { name: "PayPal", Icon: SiPaypal, color: "#003087", note: null, bg: "#003087" },
-  { name: "Wise", Icon: null, color: "#9FE870", note: null, bg: "#163300" },
-  { name: "Redotpay", Icon: null, color: "#FF3B3B", note: "USDT", bg: "#1a0000" },
+  { name: "Wise", Icon: null, logo: "/logos/wise.png", color: "#9FE870", note: null, bg: "#163300" },
+  { name: "Redotpay", Icon: null, logo: "/logos/redotpay.png", color: "#FF3B3B", note: "USDT", bg: "#1a0000" },
   { name: "Binance", Icon: SiBinance, color: "#F0B90B", note: "USDT", bg: "#181a20" },
-  { name: "Bybit", Icon: null, color: "#F7A600", note: "USDT", bg: "#1a1200" },
+  { name: "Bybit", Icon: null, logo: "/logos/bybit.png", color: "#F7A600", note: "USDT", bg: "#1a1200" },
 ];
 
 const LOCAL_PAYMENTS: PaymentLocal[] = [
-  { name: "Flouci", color: "#3B82F6", bg: "#0f1a2e" },
-  { name: "D17", color: "#EF4444", bg: "#1a0808" },
+  { name: "Flouci", logo: "/logos/flouci.png", color: "#F97316", bg: "#1a0d00" },
+  { name: "D17", logo: "/logos/d17.png", logoBg: "#1b5ea5", color: "#38bdf8", bg: "#0b1a2e" },
   { name: "Virement Bancaire", color: "#10B981", bg: "#061a12" },
 ];
 
@@ -384,7 +387,13 @@ export default function Services() {
                     />
                     {/* Icon + name */}
                     <div className="flex items-center gap-3 relative z-10">
-                      {p.Icon ? (
+                      {p.logo ? (
+                        <img
+                          src={p.logo}
+                          alt={p.name}
+                          className="w-5 h-5 flex-shrink-0 rounded-sm object-cover"
+                        />
+                      ) : p.Icon ? (
                         <p.Icon
                           style={{ color: p.color }}
                           className="w-5 h-5 flex-shrink-0"
@@ -448,12 +457,25 @@ export default function Services() {
                       }}
                     />
                     <div className="flex items-center gap-3 relative z-10">
-                      <span
-                        className="w-5 h-5 flex-shrink-0 flex items-center justify-center text-[9px] font-bold"
-                        style={{ background: p.color, color: "#fff" }}
-                      >
-                        {p.name.slice(0, 2).toUpperCase()}
-                      </span>
+                      {p.logo ? (
+                        <span
+                          className="w-5 h-5 flex-shrink-0 flex items-center justify-center rounded-sm overflow-hidden"
+                          style={{ background: p.logoBg ?? "transparent" }}
+                        >
+                          <img
+                            src={p.logo}
+                            alt={p.name}
+                            className={p.logoBg ? "w-4 h-4 object-contain" : "w-5 h-5 object-cover"}
+                          />
+                        </span>
+                      ) : (
+                        <span
+                          className="w-5 h-5 flex-shrink-0 flex items-center justify-center text-[9px] font-bold"
+                          style={{ background: p.color, color: "#fff" }}
+                        >
+                          {p.name.slice(0, 2).toUpperCase()}
+                        </span>
+                      )}
                       <span className="font-mono text-sm font-bold text-foreground group-hover:text-[var(--accent)] transition-colors duration-300">
                         {p.name}
                       </span>
