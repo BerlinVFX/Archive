@@ -64,7 +64,7 @@ export default function CookieConsent({ onAccept }: CookieConsentProps) {
 
             <div className="flex gap-4">
               <button
-                className="w-full px-6 py-3 border border-border text-foreground font-mono text-xs uppercase tracking-widest hover:bg-muted transition-colors"
+                className="w-full px-6 py-3 border border-border text-foreground text-sm font-medium hover:bg-muted transition-colors"
                 onClick={leave}
                 onMouseEnter={() => setCursorType("click")}
                 onMouseLeave={() => setCursorType("default")}
@@ -72,7 +72,7 @@ export default function CookieConsent({ onAccept }: CookieConsentProps) {
                 Leave Website
               </button>
               <button
-                className="w-full px-6 py-3 bg-primary text-primary-foreground font-mono text-xs uppercase tracking-widest hover:bg-primary/90 transition-colors"
+                className="w-full px-6 py-3 bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors"
                 onClick={accept}
                 onMouseEnter={() => setCursorType("click")}
                 onMouseLeave={() => setCursorType("default")}

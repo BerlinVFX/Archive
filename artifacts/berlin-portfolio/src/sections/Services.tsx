@@ -410,10 +410,7 @@ export default function Services() {
                         {p.note}
                       </span>
                     ) : (
-                      <span
-                        className="relative z-10 w-1.5 h-1.5 rounded-full"
-                        style={{ background: p.color }}
-                      />
+                      <span className="relative z-10 w-1.5 h-1.5 rounded-full bg-muted-foreground/30 group-hover:bg-[var(--accent)] transition-colors duration-300" />
                     )}
                   </motion.div>
                 ))}
@@ -452,8 +449,8 @@ export default function Services() {
                     />
                     <div className="flex items-center gap-3 relative z-10">
                       <span
-                        className="w-5 h-5 flex-shrink-0 flex items-center justify-center text-[9px] font-bold rounded-sm"
-                        style={{ background: p.color, color: "#000" }}
+                        className="w-5 h-5 flex-shrink-0 flex items-center justify-center text-[9px] font-bold"
+                        style={{ background: p.color, color: "#fff" }}
                       >
                         {p.name.slice(0, 2).toUpperCase()}
                       </span>
@@ -461,15 +458,44 @@ export default function Services() {
                         {p.name}
                       </span>
                     </div>
-                    <span
-                      className="relative z-10 w-1.5 h-1.5 rounded-full"
-                      style={{ background: p.color }}
-                    />
+                    <span className="relative z-10 w-1.5 h-1.5 rounded-full bg-muted-foreground/30 group-hover:bg-[var(--accent)] transition-colors duration-300" />
                   </motion.div>
                 ))}
               </div>
+
+              {/* TUN note */}
+              <motion.div
+                className="mt-2 p-4 border border-dashed border-border bg-card/50"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+              >
+                <p className="font-mono text-[10px] text-muted-foreground leading-relaxed">
+                  <span className="text-primary font-bold">TUN CLIENTS —</span>{" "}
+                  Transfers via Flouci, D17, or direct bank transfer (virement bancaire). Contact me to get full details.
+                </p>
+              </motion.div>
             </div>
           </div>
+
+          {/* INTL CRYPTO note */}
+          <motion.div
+            className="mt-6 flex items-start gap-3 p-4 border border-dashed border-primary/30 bg-primary/5"
+            initial={{ opacity: 0, y: 8 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+          >
+            <span className="mt-0.5 w-4 h-4 flex-shrink-0 flex items-center justify-center rounded-full border border-primary/50 text-primary font-bold text-[9px]">
+              !
+            </span>
+            <p className="font-mono text-[11px] text-muted-foreground leading-relaxed">
+              <span className="text-primary">INTL CRYPTO —</span>{" "}
+              Redotpay, Binance & Bybit payments are accepted in{" "}
+              <span className="text-foreground font-bold">USDT only</span>. No other crypto currency accepted.
+            </p>
+          </motion.div>
         </motion.div>
       </div>
     </section>

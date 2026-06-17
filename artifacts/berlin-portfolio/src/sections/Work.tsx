@@ -8,7 +8,7 @@ const PROJECTS = [
     id: 1,
     title: "VINTAGEVERSE",
     category: "E-Commerce",
-    year: "2024",
+    year: "2025",
     image: "/project-1.jpg",
     imgPos: "object-top",
     url: "https://vintageverse.tn/en",
@@ -20,7 +20,7 @@ const PROJECTS = [
     id: 2,
     title: "SOLINOTES",
     category: "Perfume E-Commerce",
-    year: "2024",
+    year: "2026",
     image: "/project-2.jpg",
     imgPos: "object-top",
     url: "https://solinotes.com/",
@@ -32,7 +32,7 @@ const PROJECTS = [
     id: 3,
     title: "LITTLES",
     category: "Baby & Kids Brand",
-    year: "2024",
+    year: "2025",
     image: "/project-3.jpg",
     imgPos: "object-center",
     url: "https://ilovelittles.com/",
@@ -44,7 +44,7 @@ const PROJECTS = [
     id: 4,
     title: "EMBRACE",
     category: "Beverage Brand",
-    year: "2024",
+    year: "2026",
     image: "/project-4.jpg",
     imgPos: "object-center",
     url: "https://www.drinkembrace.eu/",
@@ -56,7 +56,7 @@ const PROJECTS = [
     id: 5,
     title: "BERLIN PORTFOLIO",
     category: "Personal Portfolio",
-    year: "2024",
+    year: "2025",
     image: "/project-5.jpg",
     imgPos: "object-center",
     url: "https://berlinvfx.github.io/portfolio/",
@@ -69,7 +69,7 @@ const PROJECTS = [
     id: 6,
     title: "MONTANA PARFUM",
     category: "Luxury Perfume",
-    year: "2023",
+    year: "2026",
     image: "/project-6.jpg",
     imgPos: "object-top",
     url: "https://www.montana-parfum.com/",
@@ -141,7 +141,7 @@ export default function Work() {
                     />
                     <div className="relative z-10 text-center pointer-events-none">
                       <p className="font-mono text-[10px] uppercase tracking-[0.4em] text-primary/70 mb-3">
-                        Personal Portfolio · 2024
+                        Personal Portfolio · {project.year}
                       </p>
                       <h3 className="font-serif text-5xl font-bold text-white tracking-tight leading-none">
                         BERLIN
@@ -245,25 +245,30 @@ export default function Work() {
                 <p className="text-muted-foreground text-sm leading-relaxed mb-6">
                   {selected.summary}
                 </p>
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {selected.tech.map((t) => (
-                    <span
-                      key={t}
-                      className="px-2.5 py-1 bg-muted border border-border font-mono text-[10px] text-muted-foreground"
-                    >
-                      {t}
-                    </span>
-                  ))}
+                <div className="mb-6">
+                  <p className="font-mono text-[10px] uppercase tracking-widest text-foreground mb-2">
+                    Stack
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {selected.tech.map((t) => (
+                      <span
+                        key={t}
+                        className="px-3 py-1 border border-border text-[11px] font-mono text-muted-foreground"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
                 </div>
                 <a
                   href={selected.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-primary transition-colors"
-                  onMouseEnter={() => setCursorType("click")}
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-foreground text-background font-mono text-xs uppercase tracking-widest hover:bg-primary transition-colors w-fit"
+                  onMouseEnter={() => setCursorType("visit")}
                   onMouseLeave={() => setCursorType("default")}
                 >
-                  Visit Live Site
+                  Visit Website
                   <ArrowUpRight className="w-3.5 h-3.5" />
                 </a>
               </div>

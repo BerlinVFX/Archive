@@ -15,7 +15,7 @@ export default function Hero() {
 
       {/* Code snippet card — top right */}
       <motion.div
-        className="absolute top-28 right-[8%] w-72 h-48 border border-border bg-card/60 backdrop-blur-md rounded-lg shadow-2xl hidden lg:flex flex-col overflow-hidden"
+        className="absolute top-28 right-[8%] w-48 h-32 sm:w-72 sm:h-48 border border-border bg-card/60 backdrop-blur-md rounded-lg shadow-2xl flex flex-col overflow-hidden"
         initial={{ y: 60, opacity: 0, rotate: 0 }}
         animate={{ y: 0, opacity: 1, rotate: 5 }}
         transition={{ delay: 0.5, duration: 1.2, type: "spring", damping: 20 }}
@@ -49,7 +49,7 @@ export default function Hero() {
 
       {/* Design mockup card — bottom left */}
       <motion.div
-        className="absolute bottom-36 left-[8%] w-44 h-56 shadow-2xl hidden lg:block bg-card border border-border backdrop-blur-md p-4"
+        className="absolute bottom-36 left-[8%] w-32 h-40 sm:w-44 sm:h-56 shadow-2xl block bg-card border border-border backdrop-blur-md p-4"
         style={{ zIndex: 0 }}
         initial={{ y: -40, opacity: 0, rotate: 0 }}
         animate={{ y: 0, opacity: 1, rotate: -10 }}
