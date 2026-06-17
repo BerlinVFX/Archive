@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, ReactNode } from "react";
 
-type CursorType = "default" | "click" | "visit";
+export type CursorType = "default" | "click" | "visit" | "explore";
 
 interface CursorContextType {
   cursorType: CursorType;
@@ -22,5 +22,7 @@ export function CursorProvider({ children }: { children: ReactNode }) {
 }
 
 export function useCursor() {
-  return useContext(CursorContext);
+  const ctx = useContext(CursorContext);
+  if (ctx === undefined) throw new Error("useCursor must be used within a CursorProvider");
+  return ctx;
 }

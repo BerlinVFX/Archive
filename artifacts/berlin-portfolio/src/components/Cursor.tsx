@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { MousePointer2, ArrowUpRight } from "lucide-react";
 import { useCursor } from "@/contexts/CursorContext";
 
 export default function Cursor() {
@@ -15,42 +16,69 @@ export default function Cursor() {
     const onLeave = () => setVisible(false);
     const onEnter = () => setVisible(true);
     window.addEventListener("mousemove", onMove);
-    document.addEventListener("mouseleave", onLeave);
-    document.addEventListener("mouseenter", onEnter);
+    window.addEventListener("mouseleave", onLeave);
+    window.addEventListener("mouseenter", onEnter);
     return () => {
       window.removeEventListener("mousemove", onMove);
-      document.removeEventListener("mouseleave", onLeave);
-      document.removeEventListener("mouseenter", onEnter);
+      window.removeEventListener("mouseleave", onLeave);
+      window.removeEventListener("mouseenter", onEnter);
     };
   }, [visible]);
 
-  const size = cursorType === "default" ? 10 : cursorType === "click" ? 16 : 20;
-  const ringSize = cursorType === "default" ? 36 : cursorType === "click" ? 44 : 52;
+  if (!visible) return null;
 
   return (
-    <>
-      <motion.div
-        className="fixed top-0 left-0 z-[9999] pointer-events-none rounded-full bg-foreground mix-blend-difference"
-        animate={{
-          x: pos.x - size / 2,
-          y: pos.y - size / 2,
-          width: size,
-          height: size,
-          opacity: visible ? 1 : 0,
-        }}
-        transition={{ type: "spring", stiffness: 500, damping: 28, mass: 0.5 }}
-      />
-      <motion.div
-        className="fixed top-0 left-0 z-[9998] pointer-events-none rounded-full border border-foreground/40"
-        animate={{
-          x: pos.x - ringSize / 2,
-          y: pos.y - ringSize / 2,
-          width: ringSize,
-          height: ringSize,
-          opacity: visible ? 1 : 0,
-        }}
-        transition={{ type: "spring", stiffness: 200, damping: 24, mass: 0.8 }}
-      />
-    </>
+    <motion.div
+      className="fixed top-0 left-0 pointer-events-none z-[100] hidden md:block"
+      animate={{ x: pos.x - 16, y: pos.y - 16 }}
+      transition={{ type: "tween", ease: "backOut", duration: 0.15 }}
+    >
+      <AnimatePresence mode="wait">
+        {cursorType === "default" && (
+          <motion.div
+            key="default"
+            initial={{ scale: 0.5, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.5, opacity: 0 }}
+            className="w-8 h-8 rounded-full border border-primary bg-primary/20 backdrop-blur-sm flex items-center justify-center"
+          >
+            <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+          </motion.div>
+        )}
+        {cursorType === "explore" && (
+          <motion.div
+            key="explore"
+            initial={{ scale: 0.5, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.5, opacity: 0 }}
+            className="w-20 h-20 rounded-full bg-secondary/80 backdrop-blur-md flex items-center justify-center text-secondary-foreground font-mono text-xs uppercase tracking-widest"
+          >
+            Explore
+          </motion.div>
+        )}
+        {cursorType === "click" && (
+          <motion.div
+            key="click"
+            initial={{ scale: 0.5, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.5, opacity: 0 }}
+            className="w-12 h-12 rounded-full bg-primary backdrop-blur-sm flex items-center justify-center text-primary-foreground"
+          >
+            <MousePointer2 className="w-5 h-5" />
+          </motion.div>
+        )}
+        {cursorType === "visit" && (
+          <motion.div
+            key="visit"
+            initial={{ scale: 0.5, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.5, opacity: 0 }}
+            className="w-16 h-16 rounded-full bg-background border border-primary flex items-center justify-center text-primary"
+          >
+            <ArrowUpRight className="w-6 h-6" />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
   );
 }

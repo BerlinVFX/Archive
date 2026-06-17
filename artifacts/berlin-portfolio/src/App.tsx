@@ -6,6 +6,8 @@ import Cursor from "@/components/Cursor";
 import LoadingScreen from "@/components/LoadingScreen";
 import CookieConsent from "@/components/CookieConsent";
 import ScrollProgress from "@/components/ScrollProgress";
+import ThemeToggle from "@/components/ThemeToggle";
+import CommandMenu from "@/components/CommandMenu";
 import Navbar from "@/components/Navbar";
 import Hero from "@/sections/Hero";
 import Work from "@/sections/Work";
@@ -31,19 +33,25 @@ function Portfolio() {
 
   return (
     <main className="relative bg-background min-h-screen text-foreground">
+      {/* Custom cursor — desktop only (hidden on mobile via CSS) */}
       <Cursor />
 
+      {/* Loading screen */}
       <AnimatePresence>
         {loading && <LoadingScreen onComplete={() => setLoading(false)} />}
       </AnimatePresence>
 
+      {/* Cookie consent */}
       <AnimatePresence>
         {!loading && !accepted && <CookieConsent onAccept={() => setAccepted(true)} />}
       </AnimatePresence>
 
+      {/* Main content — shown after loading + cookie consent */}
       {!loading && accepted && (
         <>
           <ScrollProgress />
+          <ThemeToggle />
+          <CommandMenu />
           <Navbar />
           <div className="flex flex-col">
             <Hero />

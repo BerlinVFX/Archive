@@ -44,7 +44,7 @@ export default function Navbar() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ delay: 1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
     >
-      <div className="flex items-center gap-1 p-1.5 rounded-full bg-background/80 backdrop-blur-xl border border-border shadow-2xl">
+      <div className="flex items-center gap-0.5 p-1.5 rounded-full bg-background/80 backdrop-blur-xl border border-border shadow-2xl">
         {NAV_ITEMS.map((item) => (
           <button
             key={item.id}
@@ -52,7 +52,7 @@ export default function Navbar() {
             onClick={() => scrollTo(item.id)}
             onMouseEnter={() => setCursorType("click")}
             onMouseLeave={() => setCursorType("default")}
-            className={`relative px-5 py-2 rounded-full text-sm font-medium transition-colors ${
+            className={`relative px-3 py-2 sm:px-5 rounded-full text-xs sm:text-sm font-medium transition-colors ${
               active === item.id
                 ? "text-primary-foreground"
                 : "text-muted-foreground hover:text-foreground"

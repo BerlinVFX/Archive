@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const MESSAGES = [
+  "Initializing environment variables...",
   "Resolving dependencies...",
   "Compiling shaders...",
-  "Baking textures...",
   "Building AST from source...",
   "Applying dark matter rendering engine...",
-  "Establishing neural uplink...",
   "Injecting cinematic motion primitives...",
+  "Baking textures...",
+  "Establishing neural uplink...",
   "Finalizing BERLIN instance...",
 ];
 
@@ -21,71 +22,59 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
   const [lines, setLines] = useState<string[]>([]);
 
   useEffect(() => {
-    let step = 0;
-    const total = MESSAGES.length;
-
+    let p = 0;
     const interval = setInterval(() => {
-      if (step < total) {
-        setLines((prev) => [...prev, MESSAGES[step]]);
-        setProgress(Math.round(((step + 1) / total) * 100));
-        step++;
-      } else {
-        clearInterval(interval);
-        setTimeout(() => onComplete(), 600);
+      p++;
+      const pct = Math.min((p / 50) * 100, 100);
+      setProgress(pct);
+      if (p % 5 === 0 && p / 5 < MESSAGES.length) {
+        setLines((prev) => [...prev, MESSAGES[Math.floor(p / 5)]]);
       }
-    }, 260);
-
+      if (p >= 50) {
+        clearInterval(interval);
+        setTimeout(onComplete, 500);
+      }
+    }, 50);
     return () => clearInterval(interval);
   }, [onComplete]);
 
   return (
     <motion.div
-      className="fixed inset-0 z-[9990] bg-background flex flex-col justify-between p-8 md:p-14"
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.6, ease: "easeInOut" }}
+      className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-background text-primary font-mono"
+      initial={{ opacity: 1 }}
+      exit={{
+        opacity: 0,
+        y: "-100%",
+        transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] },
+      }}
     >
-      <div className="flex items-center justify-between">
-        <span className="font-mono text-xs uppercase tracking-[0.2em] text-primary">
-          BERLIN OS v1.0.0
-        </span>
-        <span className="font-mono text-xs text-muted-foreground">
-          {progress}%
-        </span>
-      </div>
-
-      <div className="space-y-1.5">
-        <AnimatePresence>
-          {lines.map((line, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, x: -8 }}
-              animate={{ opacity: i === lines.length - 1 ? 1 : 0.35, x: 0 }}
-              transition={{ duration: 0.3 }}
-              className="font-mono text-xs text-foreground"
-            >
-              <span className="text-primary mr-2">›</span>
-              {line}
-            </motion.div>
-          ))}
-        </AnimatePresence>
-      </div>
-
-      <div className="space-y-3">
-        <div className="w-full h-px bg-border overflow-hidden">
-          <motion.div
-            className="h-full bg-foreground"
-            initial={{ scaleX: 0, originX: 0 }}
-            animate={{ scaleX: progress / 100 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-          />
+      <div className="w-full max-w-2xl px-6">
+        <div className="mb-8 text-sm opacity-80 h-32 overflow-hidden flex flex-col justify-end">
+          <AnimatePresence>
+            {lines.map((line, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="mb-1 text-muted-foreground"
+              >
+                <span className="text-secondary mr-2">&gt;</span>
+                {line}
+              </motion.div>
+            ))}
+          </AnimatePresence>
         </div>
-        <div className="flex items-end justify-between">
-          <p className="font-serif text-4xl md:text-6xl font-bold tracking-tight">
-            BERLIN
-          </p>
-          <span className="font-mono text-[10px] text-muted-foreground uppercase tracking-widest">
-            Creative Developer
-          </span>
+
+        <div className="flex justify-between mb-2 text-xs uppercase tracking-widest">
+          <span>BERLIN OS v1.0.0</span>
+          <span>{Math.floor(progress)}%</span>
+        </div>
+
+        <div className="h-1 w-full bg-muted overflow-hidden">
+          <motion.div
+            className="h-full bg-primary"
+            style={{ width: `${progress}%` }}
+          />
         </div>
       </div>
     </motion.div>
