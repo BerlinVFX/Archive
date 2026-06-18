@@ -119,7 +119,7 @@ const INTL_PAYMENTS: PaymentIntl[] = [
 
 const LOCAL_PAYMENTS: PaymentLocal[] = [
   { name: "Flouci", logo: "/logos/flouci.png", color: "#F97316", bg: "#1a0d00" },
-  { name: "D17", logo: "/logos/d17.png", logoBg: "#1b5ea5", color: "#38bdf8", bg: "#0b1a2e" },
+  { name: "D17", logo: "/logos/d17.png", logoBg: "#ffffff", color: "#38bdf8", bg: "#0b1a2e" },
   { name: "Virement Bancaire", color: "#10B981", bg: "#061a12" },
 ];
 
@@ -258,7 +258,7 @@ export default function Services() {
                     viewport={{ once: true }}
                     transition={{ duration: 0.45, delay: i * 0.1 }}
                   >
-                    <span className="absolute -left-[22px] top-1 w-3.5 h-3.5 rounded-full border-2 border-primary bg-background group-hover:bg-primary transition-colors duration-300" />
+                    <span className={`absolute -left-[22px] top-1 w-3.5 h-3.5 rounded-full border-2 border-primary transition-colors duration-300 ${i === 0 ? "bg-primary" : "bg-background group-hover:bg-primary"}`} />
                     <div className="flex flex-wrap items-center gap-2 mb-1">
                       <span className="font-mono text-[10px] text-muted-foreground">
                         {exp.period}
@@ -316,7 +316,7 @@ export default function Services() {
                     viewport={{ once: true }}
                     transition={{ duration: 0.45, delay: i * 0.1 }}
                   >
-                    <span className="absolute -left-[22px] top-1 w-3.5 h-3.5 rounded-full border-2 border-border bg-background group-hover:border-primary transition-colors duration-300" />
+                    <span className={`absolute -left-[22px] top-1 w-3.5 h-3.5 rounded-full border-2 transition-colors duration-300 ${i === 0 ? "border-primary bg-background" : "border-border bg-background group-hover:border-primary"}`} />
                     <div className="flex items-center gap-2 mb-1">
                       <span className="font-mono text-[10px] text-muted-foreground">
                         {edu.period}
@@ -424,6 +424,24 @@ export default function Services() {
                   </motion.div>
                 ))}
               </div>
+
+              {/* INTL CRYPTO note — inside international column so it appears right below on mobile */}
+              <motion.div
+                className="mt-2 flex items-start gap-3 p-4 border border-dashed border-primary/30 bg-primary/5"
+                initial={{ opacity: 0, y: 8 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+              >
+                <span className="mt-0.5 w-4 h-4 flex-shrink-0 flex items-center justify-center rounded-full border border-primary/50 text-primary font-bold text-[9px]">
+                  !
+                </span>
+                <p className="font-mono text-[11px] text-muted-foreground leading-relaxed">
+                  <span className="text-primary">INTL CRYPTO —</span>{" "}
+                  Redotpay, Binance & Bybit payments are accepted in{" "}
+                  <span className="text-foreground font-bold">USDT only</span>. No other crypto currency accepted.
+                </p>
+              </motion.div>
             </div>
 
             {/* Local */}
@@ -501,23 +519,6 @@ export default function Services() {
             </div>
           </div>
 
-          {/* INTL CRYPTO note */}
-          <motion.div
-            className="mt-6 flex items-start gap-3 p-4 border border-dashed border-primary/30 bg-primary/5"
-            initial={{ opacity: 0, y: 8 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-          >
-            <span className="mt-0.5 w-4 h-4 flex-shrink-0 flex items-center justify-center rounded-full border border-primary/50 text-primary font-bold text-[9px]">
-              !
-            </span>
-            <p className="font-mono text-[11px] text-muted-foreground leading-relaxed">
-              <span className="text-primary">INTL CRYPTO —</span>{" "}
-              Redotpay, Binance & Bybit payments are accepted in{" "}
-              <span className="text-foreground font-bold">USDT only</span>. No other crypto currency accepted.
-            </p>
-          </motion.div>
         </motion.div>
       </div>
     </section>
