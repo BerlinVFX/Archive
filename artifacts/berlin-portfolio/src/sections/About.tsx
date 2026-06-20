@@ -53,7 +53,7 @@ export default function About() {
               whileHover={{ rotate: 0, scale: 1.02, transition: { duration: 0.4 } }}
             >
               <img
-                src="/berlin-about.png"
+                src="berlin-about.png"
                 alt="BERLIN"
                 className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
               />

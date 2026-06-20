@@ -39,7 +39,7 @@ export default function CookieConsent({ onAccept }: CookieConsentProps) {
             <div className="flex justify-center mb-6">
               <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-primary shadow-lg shadow-primary/20">
                 <img
-                  src="/berlin-about.png"
+                  src="berlin-about.png"
                   alt="BERLIN"
                   className="w-full h-full object-cover object-top"
                 />

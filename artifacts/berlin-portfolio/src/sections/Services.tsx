@@ -111,15 +111,15 @@ type PaymentLocal = {
 
 const INTL_PAYMENTS: PaymentIntl[] = [
   { name: "PayPal", Icon: SiPaypal, color: "#003087", note: null, bg: "#003087" },
-  { name: "Wise", Icon: null, logo: "/logos/wise.png", color: "#9FE870", note: null, bg: "#163300" },
-  { name: "Redotpay", Icon: null, logo: "/logos/redotpay.png", color: "#FF3B3B", note: "USDT", bg: "#1a0000" },
+  { name: "Wise", Icon: null, logo: "logos/wise.png", color: "#9FE870", note: null, bg: "#163300" },
+  { name: "Redotpay", Icon: null, logo: "logos/redotpay.png", color: "#FF3B3B", note: "USDT", bg: "#1a0000" },
   { name: "Binance", Icon: SiBinance, color: "#F0B90B", note: "USDT", bg: "#181a20" },
-  { name: "Bybit", Icon: null, logo: "/logos/bybit.png", color: "#F7A600", note: "USDT", bg: "#1a1200" },
+  { name: "Bybit", Icon: null, logo: "logos/bybit.png", color: "#F7A600", note: "USDT", bg: "#1a1200" },
 ];
 
 const LOCAL_PAYMENTS: PaymentLocal[] = [
-  { name: "Flouci", logo: "/logos/flouci.png", color: "#F97316", bg: "#1a0d00" },
-  { name: "D17", logo: "/logos/d17.png", logoBg: "#ffffff", color: "#38bdf8", bg: "#0b1a2e" },
+  { name: "Flouci", logo: "logos/flouci.png", color: "#F97316", bg: "#1a0d00" },
+  { name: "D17", logo: "logos/d17.png", logoBg: "#ffffff", color: "#38bdf8", bg: "#0b1a2e" },
   { name: "Virement Bancaire", color: "#10B981", bg: "#061a12" },
 ];
 
