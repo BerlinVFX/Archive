@@ -41,11 +41,7 @@ jobs:
         env:
           PORT: 3000
           BASE_PATH: "/Archive/"
-        run: |
-          pnpm run build
-          echo "--- Content of dist folder ---"
-          ls -R ./artifacts/berlin-portfolio/dist
-          echo "--- End of content ---"
+        run: pnpm run build
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -53,7 +49,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: artifacts/berlin-portfolio/dist
+          path: './artifacts/berlin-portfolio/dist/public'
 
       - name: Deploy to GitHub Pages
         id: deployment
