@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, Download, X, CheckCircle, Mail } from "lucide-react";
 import { SiInstagram, SiDiscord } from "react-icons/si";
@@ -38,14 +38,41 @@ export default function Contact() {
   const [sent, setSent] = useState(false);
   const [cvPreview, setCvPreview] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSending(true);
-    setTimeout(() => {
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: "057db199-fb51-438e-a019-16fb300d90f2",
+          name: form.name,
+          email: form.email,
+          message: form.message,
+          subject: `New Portfolio Message From ${form.name}`,
+          to_email: "berlindesignstn@gmail.com",
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setSent(true);
+        setForm({ name: "", email: "", message: "" });
+      } else {
+        alert("Failed to send message");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("An error occurred while sending.");
+    } finally {
       setSending(false);
-      setSent(true);
-      setForm({ name: "", email: "", message: "" });
-    }, 1500);
+    }
   };
 
   const downloadCv = () => {
@@ -80,7 +107,6 @@ export default function Contact() {
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16">
-          {/* Form */}
           <motion.div
             className="lg:col-span-2"
             initial={{ opacity: 0, y: 20 }}
@@ -99,7 +125,9 @@ export default function Contact() {
                   <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center mb-5">
                     <CheckCircle className="w-5 h-5 text-primary" />
                   </div>
-                  <h3 className="font-serif text-2xl font-bold mb-2">Message sent.</h3>
+                  <h3 className="font-serif text-2xl font-bold mb-2">
+                    Message sent.
+                  </h3>
                   <p className="text-muted-foreground text-sm leading-relaxed mb-6">
                     I'll get back to you within 48 hours.
                   </p>
@@ -128,7 +156,9 @@ export default function Contact() {
                         required
                         data-testid="input-name"
                         value={form.name}
-                        onChange={(e) => setForm({ ...form, name: e.target.value })}
+                        onChange={(e) =>
+                          setForm({ ...form, name: e.target.value })
+                        }
                         className={INPUT_CLASS}
                         placeholder="Your name"
                         onFocus={() => setCursorType("click")}
@@ -144,7 +174,9 @@ export default function Contact() {
                         required
                         data-testid="input-email"
                         value={form.email}
-                        onChange={(e) => setForm({ ...form, email: e.target.value })}
+                        onChange={(e) =>
+                          setForm({ ...form, email: e.target.value })
+                        }
                         className={INPUT_CLASS}
                         placeholder="your@email.com"
                         onFocus={() => setCursorType("click")}
@@ -152,6 +184,7 @@ export default function Contact() {
                       />
                     </div>
                   </div>
+
                   <div>
                     <label className="block font-mono text-[10px] uppercase tracking-widest text-muted-foreground mb-2">
                       Message
@@ -161,13 +194,16 @@ export default function Contact() {
                       rows={6}
                       data-testid="input-message"
                       value={form.message}
-                      onChange={(e) => setForm({ ...form, message: e.target.value })}
+                      onChange={(e) =>
+                        setForm({ ...form, message: e.target.value })
+                      }
                       className={`${INPUT_CLASS} resize-none`}
                       placeholder="Tell me about your project..."
                       onFocus={() => setCursorType("click")}
                       onBlur={() => setCursorType("default")}
                     />
                   </div>
+
                   <button
                     type="submit"
                     data-testid="button-submit"
@@ -193,7 +229,6 @@ export default function Contact() {
             </AnimatePresence>
           </motion.div>
 
-          {/* Sidebar */}
           <motion.div
             className="space-y-8"
             initial={{ opacity: 0, y: 20 }}
@@ -201,7 +236,6 @@ export default function Contact() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            {/* Social links */}
             <div>
               <p className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground mb-2">
                 Find me on
@@ -246,7 +280,6 @@ export default function Contact() {
               </div>
             </div>
 
-            {/* CV download */}
             <div>
               <p className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground mb-4">
                 Resume
@@ -265,7 +298,9 @@ export default function Contact() {
                   <p className="font-mono text-[9px] uppercase tracking-widest text-muted-foreground">
                     PDF · 2026
                   </p>
-                  <p className="font-mono text-sm text-foreground mt-0.5">Download CV</p>
+                  <p className="font-mono text-sm text-foreground mt-0.5">
+                    Download CV
+                  </p>
                 </div>
                 <Download className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors flex-shrink-0" />
               </button>
@@ -274,7 +309,6 @@ export default function Contact() {
         </div>
       </div>
 
-      {/* CV preview modal */}
       <AnimatePresence>
         {cvPreview && (
           <motion.div
@@ -302,6 +336,7 @@ export default function Contact() {
               >
                 <X className="w-3.5 h-3.5" />
               </button>
+
               <div className="p-6 border-b border-border">
                 <p className="font-mono text-[9px] uppercase tracking-widest text-muted-foreground mb-4">
                   Preview
@@ -312,6 +347,7 @@ export default function Contact() {
                   className="w-full border border-border"
                 />
               </div>
+
               <div className="p-4">
                 <button
                   data-testid="button-confirm-download-cv"
