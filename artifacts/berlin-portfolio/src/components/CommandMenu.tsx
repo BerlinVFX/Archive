@@ -10,7 +10,7 @@ const scrollTo = (id: string) => {
 
 const downloadCv = () => {
   const a = document.createElement("a");
-  a.href = "/berlin-cv.png";
+  a.href = "berlin-cv.png";
   a.download = "BERLIN_CV.png";
   document.body.appendChild(a);
   a.click();

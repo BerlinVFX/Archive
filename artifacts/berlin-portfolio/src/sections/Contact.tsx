@@ -78,7 +78,7 @@ export default function Contact() {
   const downloadCv = () => {
     setCvPreview(false);
     const a = document.createElement("a");
-    a.href = "/berlin-cv.png";
+    a.href = "berlin-cv.png";
     a.download = "BERLIN_CV.png";
     document.body.appendChild(a);
     a.click();
@@ -342,7 +342,7 @@ export default function Contact() {
                   Preview
                 </p>
                 <img
-                  src="/berlin-cv.png"
+                  src="berlin-cv.png"
                   alt="BERLIN CV"
                   className="w-full border border-border"
                 />
