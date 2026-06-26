@@ -63,7 +63,7 @@ const PROJECTS = [
     tech: ["React", "Framer Motion", "Tailwind CSS", "Vite"],
     summary:
       "A bold, animated personal portfolio — the earlier version of this very site — showcasing creative development work with cinematic transitions, custom cursor, and editorial design.",
-    customCard: true,
+    customCard: false,
   },
   {
     id: 6,
